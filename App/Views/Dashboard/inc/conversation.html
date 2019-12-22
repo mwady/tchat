@@ -1,0 +1,40 @@
+<div class="contact-profile">
+    {% if userChat.avatar %}
+    <img id="profile-img" src="{{userChat.image_profile}}" />
+    {% else %}
+    <img id="profile-img" src="assets/images/userDef.jpg" />
+    {% endif %}
+                
+    <p>{{userChat.name}}</p>
+    <div class="social-media">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+    </div>
+</div>
+<div class="messages">
+    <ul>
+        {% for message in messages %}
+        <li class="{{message.stats}}">
+            {% if message.stats == 'replies' %}
+                <img src="{{message.image_profile}}" alt="">
+            {% else %}
+                {% if userChat.avatar %}
+                <img id="profile-img" src="{{userChat.image_profile}}" />
+                {% else %}
+                <img id="profile-img" src="assets/images/userDef.jpg" />
+                {% endif %}
+            {% endif %}
+            <p>{{message.message}}</p>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="message-input">
+    <div class="wrap">
+        <form method="POST" action="add_message" class="conversationForm">
+            <input type="hidden" name="user_sender_id" value="{{user_connected_id}}">
+            <input type="hidden" name="to_user_id" value="{{userChat.crypt_id}}">
+            <input type="text" name="message" placeholder="Envoyer un message...">
+            <button class="submit" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+        </form>
+    </div>
+</div>

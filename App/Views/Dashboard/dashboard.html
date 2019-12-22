@@ -1,0 +1,56 @@
+{% extends "baseTchat.html" %}
+
+{% block title %}T'CHAT{% endblock %}
+
+{% block body %}
+
+<div id="frame">
+	<div id="sidepanel">
+		<div id="profile">
+			<div class="wrap">
+				{% if userConnected.avatar %}
+				<img id="profile-img" src="{{userConnected.image_profile}}" class="online" />
+				{% else %}
+				<img id="profile-img" src="assets/images/userDef.jpg" class="online" />
+				{% endif %}
+
+				<p>{{userConnected.name}}</p>
+                <a class="pull-right" style="color: #fff;" href="logout" title="Logout"><i class="fa fa-sign-out"></i></a>
+			</div>
+		</div>
+		<div id="search">
+			<label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+			<input type="text" placeholder="Search contacts..." />
+		</div>
+		<div id="contacts">
+			<ul>
+				{% for user in users %}
+				<li class="contact liUser" data-id="{{user.crypt_id}}">
+					<div class="wrap">
+						<span class="contact-status {% if user.is_connected %}online{% else %}offline{% endif %}"></span>
+						<img src="{{user.image_profile}}" alt="" />
+						<div class="meta">
+							<p class="name">{{user.name}}</p>
+							<p class="preview">
+								{% if user.last_message %}
+									{% if user.whosent != user.id %}
+										<i class="fa fa-check" style="font-size: 10px;color: #000;"></i>
+									{% endif %}
+									{{user.last_message}}
+								{% else %}
+								.
+								{% endif %}
+							</p>
+						</div>
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+	<div class="content" id="contentChat">
+		<h1 class="h1welcome">Bienvenue au<span>T'Chat</span></h1>
+	</div>
+</div>
+
+{% endblock %}
